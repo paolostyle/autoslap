@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - '12'
+  - '10'
+  - '8'
+cache:
+  directories:
+    - node_modules
+deploy:
+  provider: npm
+  email: dabrowskip9@gmail.com
+  api_key:
+    secure: aSK0CAhR3A/r9roLlCWZ74buqyrIFX5y5cc1aQbjsYDzPrcmI2JlRYhllQUoWDwZZijBqniEfOn+8ryNoeDcGsywxDhjzwJphz8rXbn+wKx/wkIXHoYrexoJeWTScjKV8LNcu54pMjc2ns0P9E/u6DnXOMXyQD1AB6R8+MyiaAasehEs+aIhzWOmR3LQhSGF3YzZ4CtaxNRvsG4dgGr+kSTBXXorCRatPzsrnlEn8v8qUVY9fFet0IwDzqQX0vi+3xbAGIFw9M+qNRP3byMNWPB3r+Cxfi7AVDtq21YqUo6WNw4AUYiBv1TMBSEKLNWlQqH6Of/pmk5GlqmVfuawmXaitsCMxVeHYazhyYO1Nx1W2OTjQij7o/uc84nZKFVtIYvf3Zjg77i6xtmxaOZGsxcRLcUzOTUFY95eXF9LGUynr/WP7CvIK1dnrhAZeD+UGclo20JozHA3vxhJkxBwyPot7ZnmcpMHuUdCbBLkpMjZB3UFYbXthDURIq57rcVe2n9MimcCe07Lxfih2hhAjw02/tSgNEK1Jaz+S5zyVtLm7e/x47jr4camAXZ+jY6/5cCs5BZDNvdm4k7PNtPbjsR+uBljNCLQeBK5kz152kubfCducsx2UQmJYZqdsyLseEeipsk5ned55ag2p6V26KxuXvQwLqH2oFNbqxNSkXw=
+  on:
+    tags: true
+    repo: paolostyle/autoslap
