@@ -1,6 +1,6 @@
 # autoslap
 
-Automatically install ESLint, Prettier, lint-staged and Husky in any project with zero config
+Install and configure ESLint, Prettier, lint-staged and Husky with one command
 
 [![NPM](https://img.shields.io/npm/v/autoslap.svg)](https://www.npmjs.com/package/autoslap)
 

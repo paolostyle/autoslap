@@ -1,7 +1,7 @@
 {
   "name": "autoslap",
-  "version": "0.1.1",
-  "description": "Automatically installs ESLint, Prettier, lint-staged and Husky with basic config",
+  "version": "0.1.2",
+  "description": "Install and configure ESLint, Prettier, lint-staged and Husky with one command",
   "main": "index.js",
   "author": "Paweł Dąbrowski <dabrowskip9@gmail.com>",
   "license": "MIT",

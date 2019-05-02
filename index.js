@@ -143,10 +143,14 @@ function generateNewPackageJson(packagesToInstall, pkg) {
     if (!Array.isArray(arr)) arr = [arr];
     return arr[all ? 'every' : 'some'](i => packagesToInstall.includes(i));
   };
+  const isEslintInstalled = isInstalled('eslint') || usesCRA(pkg);
+
+  const prettierExts = 'htm,html,css,scss,less,graphql,json,md,yaml,yml';
+  const eslintExts = 'ts,tsx,js,jsx';
 
   const config = {
     ...spreadConfig(
-      isInstalled('eslint') || usesCRA(pkg),
+      isEslintInstalled,
       'eslintConfig',
       generateEslintConfig(packagesToInstall, pkg)
     ),
@@ -159,13 +163,10 @@ function generateNewPackageJson(packagesToInstall, pkg) {
       !pkg.lintStaged && isInstalled('lint-staged') && isInstalled(['eslint', 'prettier']),
       'lint-staged',
       {
-        ...spreadConfig(isInstalled('eslint') || usesCRA(pkg), '*.{ts,tsx,js,jsx}', [
-          'eslint --fix',
-          'git add'
-        ]),
+        ...spreadConfig(isEslintInstalled, `*.{${eslintExts}}`, ['eslint --fix', 'git add']),
         ...spreadConfig(
           isInstalled('prettier'),
-          '*.{htm,html,css,scss,less,graphql,json,md,yaml,yml}',
+          isEslintInstalled ? `*.{${prettierExts}}` : `*.{${eslintExts},${prettierExts}}`,
           ['prettier --write', 'git add']
         )
       }
