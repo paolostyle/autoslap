@@ -157,7 +157,7 @@ function generateNewPackageJson(packagesToInstall, pkg) {
     }),
     ...spreadConfig(
       !pkg.lintStaged && isInstalled('lint-staged') && isInstalled(['eslint', 'prettier']),
-      'lintStaged',
+      'lint-staged',
       {
         ...spreadConfig(isInstalled('eslint') || usesCRA(pkg), '*.{ts,tsx,js,jsx}', [
           'eslint --fix',
