@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var pkgFile = require('./package.json');
+var pkgFile = require('../package.json');
 require('please-upgrade-node')(pkgFile);
 require('update-notifier')({ pkg: pkgFile }).notify();
 
@@ -73,7 +73,7 @@ const argv = require('yargs')
 
   if (packagesToInstall.includes('husky') && !isGit()) {
     warning('Current directory is not in a Git repository. Creating...');
-    spawnSync('git', ['init']);
+    spawnSync('git', ['init'], { stdio: 'inherit' });
   }
 
   if (!packagesToInstall.length) {
@@ -100,4 +100,7 @@ const argv = require('yargs')
   });
 
   success('\nDone! You can adjust your configs by modifying your package.json.');
+  success(
+    "Thanks for using autoslap! If you're happy with the results, make sure to star the GitHub repo: https://github.com/paolostyle/autoslap - if you're not, create an issue there!"
+  );
 })();

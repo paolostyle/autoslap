@@ -15,17 +15,17 @@
     "cli",
     "zero-config"
   ],
-  "main": "index.js",
+  "main": "src/index.js",
   "author": "Paweł Dąbrowski <dabrowskip9@gmail.com>",
   "license": "MIT",
   "bin": {
-    "autoslap": "./index.js"
+    "autoslap": "./src/index.js"
   },
   "engines": {
     "node": ">=8"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/index.js",
     "test": "jest",
     "test:dev": "jest --watchAll"
   },

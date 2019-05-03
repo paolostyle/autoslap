@@ -7,15 +7,15 @@ jest.mock('cross-spawn', () => ({
   }))
 }));
 
-describe('initPackageJson', () => {
-  test('properly initiates package.json creation with yarn', () => {
+describe('initPackageJson properly initiates package.json creation', () => {
+  test('with yarn', () => {
     expect(autoslap.initPackageJson({ yarn: true })).toEqual({
       command: 'yarn',
       params: ['init']
     });
   });
 
-  test('properly initiates package.json creation with npm', () => {
+  test('with npm', () => {
     expect(autoslap.initPackageJson({ yarn: false })).toEqual({
       command: 'npm',
       params: ['init']
@@ -23,8 +23,8 @@ describe('initPackageJson', () => {
   });
 });
 
-describe('preparePackages', () => {
-  test('returns proper packages with config only', () => {
+describe('preparePackages returns proper packages', () => {
+  test('with config only', () => {
     const config = {
       eslint: true,
       prettier: true,
@@ -42,7 +42,7 @@ describe('preparePackages', () => {
     expect(result).not.toContain('lint-staged');
   });
 
-  test('returns proper packages with config and devDependencies', () => {
+  test('with config and devDependencies', () => {
     const config = {
       eslint: true,
       prettier: true,
@@ -66,7 +66,7 @@ describe('preparePackages', () => {
     expect(result).toContain('lint-staged');
   });
 
-  test('returns proper packages with config and both devDependencies and dependencies', () => {
+  test('with config and both devDependencies and dependencies', () => {
     const config = {
       eslint: true,
       prettier: false,
@@ -93,7 +93,7 @@ describe('preparePackages', () => {
     expect(result).not.toContain('lint-staged');
   });
 
-  test('returns proper packages with react-scripts installed', () => {
+  test('with react-scripts installed', () => {
     const config = {
       eslint: true,
       prettier: true,
@@ -140,8 +140,8 @@ describe('installPackages', () => {
   });
 });
 
-describe('[eslint only] generateNewPackageJson', () => {
-  test('returns proper package.json with existing eslint config', () => {
+describe('[eslint only] generateNewPackageJson returns proper package.json', () => {
+  test('with existing eslint config', () => {
     const config = autoslap.generateNewPackageJson(['eslint'], {
       eslintConfig: { extends: ['react-app', 'my-config'], rules: {} }
     });
@@ -154,7 +154,7 @@ describe('[eslint only] generateNewPackageJson', () => {
     });
   });
 
-  test('returns proper package.json with no existing eslint config', () => {
+  test('with no existing eslint config', () => {
     const config = autoslap.generateNewPackageJson(['eslint'], {});
 
     expect(config).toEqual({
@@ -173,8 +173,8 @@ describe('[eslint only] generateNewPackageJson', () => {
   });
 });
 
-describe('[eslint + prettier only] generateNewPackageJson', () => {
-  test('returns proper package.json for empty project', () => {
+describe('[eslint + prettier only] generateNewPackageJson returns proper package.json', () => {
+  test('for empty project', () => {
     const config = autoslap.generateNewPackageJson(
       ['prettier', 'eslint', 'eslint-config-prettier', 'eslint-plugin-prettier'],
       {}
@@ -198,7 +198,7 @@ describe('[eslint + prettier only] generateNewPackageJson', () => {
     });
   });
 
-  test('returns proper package.json for existing eslint extends clause (string)', () => {
+  test('for existing eslint extends clause (string)', () => {
     const config = autoslap.generateNewPackageJson(
       ['prettier', 'eslint', 'eslint-config-prettier', 'eslint-plugin-prettier'],
       { eslintConfig: { extends: 'react-app', rules: {} } }
@@ -215,7 +215,7 @@ describe('[eslint + prettier only] generateNewPackageJson', () => {
     });
   });
 
-  test('returns proper package.json for existing eslint extends clause (array)', () => {
+  test('for existing eslint extends clause (array)', () => {
     const config = autoslap.generateNewPackageJson(
       ['prettier', 'eslint', 'eslint-config-prettier', 'eslint-plugin-prettier'],
       { eslintConfig: { extends: ['react-app', 'my-config'], rules: {} } }

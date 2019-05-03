@@ -4,6 +4,7 @@ Install and configure ESLint, Prettier, lint-staged and Husky with one command
 
 [![Build Status](https://api.travis-ci.org/paolostyle/autoslap.svg?branch=master)](https://travis-ci.org/paolostyle/autoslap)
 [![NPM](https://img.shields.io/npm/v/autoslap.svg)](https://www.npmjs.com/package/autoslap)
+[![Codecov](https://codecov.io/gh/paolostyle/autoslap/branch/master/graph/badge.svg)](https://codecov.io/gh/paolostyle/autoslap)
 
 ## About
 
@@ -28,6 +29,14 @@ or
 After installing the package, go to the **main directory** of your project and run `autoslap`. This should be enough in 99% of the cases. If your project was just initialized and has no dependencies, you might want to run it with flag `--yarn` to make sure it's installed with yarn instead of npm. By default, autoslap checks if you have a `yarn.lock` file in your directory - if so, it will use yarn, otherwise it will use npm.
 
 You can also disable installing some tools by using flags `--no-<tool>`, e.g. `autoslap --no-eslint` will not install or configure anything related to ESLint. All available options can be checked out by running `autoslap --help`.
+
+## TODO
+
+- Saving own config(s)
+- Handling external config files (.prettierrc etc.)
+- Should it configure tools if they're installed but not configured?
+- Typescript support in ESLint (before you ask: I'm not planning [supporting TSLint](https://github.com/Microsoft/TypeScript/issues/29288)) - should it be even handled at all?
+- Automatic Prettier exclusions based on installed plugins (maybe includes the point above?)
 
 ## Name
 
