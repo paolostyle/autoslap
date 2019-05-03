@@ -5,17 +5,17 @@ require('please-upgrade-node')(pkgFile);
 require('update-notifier')({ pkg: pkgFile }).notify();
 
 const chalk = require('chalk');
+const { sync: spawnSync } = require('cross-spawn');
 const fs = require('fs-extra');
 const isGit = require('is-git-repository');
+const jsonfile = require('jsonfile');
 const {
   initPackageJson,
-  getPackageJson,
   preparePackages,
   installPackages,
-  generateNewPackageJson,
-  savePackageJson
+  generateNewPackageJson
 } = require('./handlePackages');
-const { title, error, warning, progress, success, gitInit } = require('./utils');
+const { title, error, warning, progress, success } = require('./chalk');
 
 const argv = require('yargs')
   .detectLocale(false)
@@ -66,14 +66,14 @@ const argv = require('yargs')
     initPackageJson(config);
   }
 
-  let pkg = await getPackageJson(config);
+  let pkg = await jsonfile.readFile(config.package);
 
   progress('Preparing packages to install...');
   const packagesToInstall = preparePackages(config, pkg);
 
   if (packagesToInstall.includes('husky') && !isGit()) {
     warning('Current directory is not in a Git repository. Creating...');
-    gitInit();
+    spawnSync('git', ['init']);
   }
 
   if (!packagesToInstall.length) {
@@ -88,14 +88,16 @@ const argv = require('yargs')
   );
   installPackages(packagesToInstall, config.yarn);
 
-  pkg = await getPackageJson(config);
+  pkg = await jsonfile.readFile(config.package);
   if (!pkg) {
     error('package.json could not be opened. Exiting.');
     process.exit(1);
   }
 
   progress('Adding configurations...');
-  await savePackageJson(config.package, generateNewPackageJson(packagesToInstall, pkg));
+  await jsonfile.writeFile(config.package, generateNewPackageJson(packagesToInstall, pkg), {
+    spaces: 2
+  });
 
   success('\nDone! You can adjust your configs by modifying your package.json.');
 })();

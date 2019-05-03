@@ -1,28 +1,16 @@
 const { sync: spawnSync } = require('cross-spawn');
-const jsonfile = require('jsonfile');
-const has = require('lodash.has');
-const { usesCRA, spreadConfig } = require('./utils');
+const { usesCRA, spreadConfig, isInstalledFactory } = require('./utils');
 
 function initPackageJson(config) {
-  spawnSync(config.yarn ? 'yarn' : 'npm', ['init'], { stdio: 'inherit' });
-}
-
-async function getPackageJson(config) {
-  return jsonfile.readFile(config.package);
+  return spawnSync(config.yarn ? 'yarn' : 'npm', ['init'], { stdio: 'inherit' });
 }
 
 function preparePackages(config, pkg) {
+  const isInstalled = isInstalledFactory(pkg);
   const basicPackages = ['eslint', 'prettier', 'lint-staged', 'husky'];
-  let packagesToInstall;
-
-  if (pkg) {
-    packagesToInstall = basicPackages.filter(
-      item =>
-        config[item] && !(has(pkg, `dependencies.${item}`) || has(pkg, `devDependencies.${item}`))
-    );
-  } else {
-    packagesToInstall = basicPackages.filter(item => config[item]);
-  }
+  let packagesToInstall = pkg
+    ? basicPackages.filter(item => config[item] && !isInstalled(item))
+    : basicPackages.filter(item => config[item]);
 
   if (packagesToInstall.includes('eslint') && packagesToInstall.includes('prettier')) {
     packagesToInstall.push('eslint-config-prettier', 'eslint-plugin-prettier');
@@ -51,30 +39,21 @@ function installPackages(packagesToInstall, withYarn) {
 }
 
 function generateEslintConfig(packagesToInstall, pkg) {
-  const appendPrettierConfig = arr =>
-    arr.concat(
-      packagesToInstall.includes('eslint-plugin-prettier') &&
-        !arr.includes('plugin:prettier/recommended')
-        ? ['plugin:prettier/recommended']
-        : []
-    );
+  const appendPrettierConfig = existingExtends =>
+    []
+      .concat(existingExtends)
+      .concat(
+        packagesToInstall.includes('eslint-plugin-prettier') &&
+          !existingExtends.includes('plugin:prettier/recommended')
+          ? ['plugin:prettier/recommended']
+          : []
+      );
 
   if (pkg.eslintConfig && pkg.eslintConfig.extends) {
-    const existingExtends = pkg.eslintConfig.extends;
-
-    if (Array.isArray(existingExtends)) {
-      return {
-        ...pkg.eslintConfig,
-        extends: appendPrettierConfig(existingExtends)
-      };
-    } else if (typeof existingExtends === 'string') {
-      return {
-        ...pkg.eslintConfig,
-        extends: appendPrettierConfig([existingExtends])
-      };
-    } else {
-      throw new Error('Unexpected value of extends attribute in ESLint config.');
-    }
+    return {
+      ...pkg.eslintConfig,
+      extends: appendPrettierConfig(pkg.eslintConfig.extends)
+    };
   } else {
     // We assume that if there is an existing eslint config,
     // then it already has properly configured env and parser.
@@ -116,7 +95,7 @@ function generateNewPackageJson(packagesToInstall, pkg) {
       }
     }),
     ...spreadConfig(
-      !pkg.lintStaged && isInstalled('lint-staged') && isInstalled(['eslint', 'prettier']),
+      !pkg['lint-staged'] && isInstalled('lint-staged') && isInstalled(['eslint', 'prettier']),
       'lint-staged',
       {
         ...spreadConfig(isEslintInstalled, `*.{${eslintExts}}`, ['eslint --fix', 'git add']),
@@ -135,16 +114,9 @@ function generateNewPackageJson(packagesToInstall, pkg) {
   return { ...pkg, ...config };
 }
 
-async function savePackageJson(path, newPkg) {
-  return jsonfile.writeFile(path, newPkg, { spaces: 2 });
-}
-
 module.exports = {
   initPackageJson,
-  getPackageJson,
   preparePackages,
   installPackages,
-  generateEslintConfig,
-  generateNewPackageJson,
-  savePackageJson
+  generateNewPackageJson
 };

@@ -7,6 +7,22 @@ jest.mock('cross-spawn', () => ({
   }))
 }));
 
+describe('initPackageJson', () => {
+  test('properly initiates package.json creation with yarn', () => {
+    expect(autoslap.initPackageJson({ yarn: true })).toEqual({
+      command: 'yarn',
+      params: ['init']
+    });
+  });
+
+  test('properly initiates package.json creation with npm', () => {
+    expect(autoslap.initPackageJson({ yarn: false })).toEqual({
+      command: 'npm',
+      params: ['init']
+    });
+  });
+});
+
 describe('preparePackages', () => {
   test('returns proper packages with config only', () => {
     const config = {
@@ -124,22 +140,94 @@ describe('installPackages', () => {
   });
 });
 
-describe('generateEslintConfig', () => {
-  test('returns proper config for empty project', () => {
-    const config = autoslap.generateEslintConfig(
+describe('[eslint only] generateNewPackageJson', () => {
+  test('returns proper package.json with existing eslint config', () => {
+    const config = autoslap.generateNewPackageJson(['eslint'], {
+      eslintConfig: { extends: ['react-app', 'my-config'], rules: {} }
+    });
+
+    expect(config).toEqual({
+      eslintConfig: {
+        extends: ['react-app', 'my-config'],
+        rules: {}
+      }
+    });
+  });
+
+  test('returns proper package.json with no existing eslint config', () => {
+    const config = autoslap.generateNewPackageJson(['eslint'], {});
+
+    expect(config).toEqual({
+      eslintConfig: {
+        extends: ['eslint:recommended'],
+        env: {
+          es6: true,
+          browser: true,
+          node: true
+        },
+        parserOptions: {
+          ecmaVersion: 10
+        }
+      }
+    });
+  });
+});
+
+describe('[eslint + prettier only] generateNewPackageJson', () => {
+  test('returns proper package.json for empty project', () => {
+    const config = autoslap.generateNewPackageJson(
       ['prettier', 'eslint', 'eslint-config-prettier', 'eslint-plugin-prettier'],
       {}
     );
 
     expect(config).toEqual({
-      extends: ['eslint:recommended', 'plugin:prettier/recommended'],
-      env: {
-        es6: true,
-        browser: true,
-        node: true
+      eslintConfig: {
+        extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+        env: {
+          es6: true,
+          browser: true,
+          node: true
+        },
+        parserOptions: {
+          ecmaVersion: 10
+        }
       },
-      parserOptions: {
-        ecmaVersion: 10
+      prettier: {
+        singleQuote: true
+      }
+    });
+  });
+
+  test('returns proper package.json for existing eslint extends clause (string)', () => {
+    const config = autoslap.generateNewPackageJson(
+      ['prettier', 'eslint', 'eslint-config-prettier', 'eslint-plugin-prettier'],
+      { eslintConfig: { extends: 'react-app', rules: {} } }
+    );
+
+    expect(config).toEqual({
+      eslintConfig: {
+        extends: ['react-app', 'plugin:prettier/recommended'],
+        rules: {}
+      },
+      prettier: {
+        singleQuote: true
+      }
+    });
+  });
+
+  test('returns proper package.json for existing eslint extends clause (array)', () => {
+    const config = autoslap.generateNewPackageJson(
+      ['prettier', 'eslint', 'eslint-config-prettier', 'eslint-plugin-prettier'],
+      { eslintConfig: { extends: ['react-app', 'my-config'], rules: {} } }
+    );
+
+    expect(config).toEqual({
+      eslintConfig: {
+        extends: ['react-app', 'my-config', 'plugin:prettier/recommended'],
+        rules: {}
+      },
+      prettier: {
+        singleQuote: true
       }
     });
   });

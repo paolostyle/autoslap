@@ -49,6 +49,10 @@
     "lint-staged": "^8.1.5",
     "prettier": "^1.17.0"
   },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  },
   "eslintConfig": {
     "env": {
       "es6": true,

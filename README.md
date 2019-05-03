@@ -25,7 +25,7 @@ or
 
 ## Usage
 
-After installing the package, go to the **main directory** of your project and run `autoslap`. This should be enough for 99% of the cases. If your project was just initialized and has no dependencies, you might want to run it with flag `--yarn` to make sure it's installed with yarn instead of npm. By default, autoslap checks if you have a `yarn.lock` file in your directory - if so, it will use yarn, otherwise it will use npm.
+After installing the package, go to the **main directory** of your project and run `autoslap`. This should be enough in 99% of the cases. If your project was just initialized and has no dependencies, you might want to run it with flag `--yarn` to make sure it's installed with yarn instead of npm. By default, autoslap checks if you have a `yarn.lock` file in your directory - if so, it will use yarn, otherwise it will use npm.
 
 You can also disable installing some tools by using flags `--no-<tool>`, e.g. `autoslap --no-eslint` will not install or configure anything related to ESLint. All available options can be checked out by running `autoslap --help`.
 
@@ -33,6 +33,8 @@ You can also disable installing some tools by using flags `--no-<tool>`, e.g. `a
 
 You might be wondering why this package is named that way. It's an acronym for "**auto**matic **s**taged **l**inting **a**nd **p**rettyfying". Expanded name doesn't really make much sense, but autoslap sounds catchy to me. You can also think about it as a slap to the ugly code in your repo, you won't be seeing it again. And the slap will be fully automated!
 
-## Copyright
+## License
+
+[MIT](https://github.com/paolostyle/autoslap/blob/master/LICENSE)
 
 Paweł Dąbrowski &copy; 2019
