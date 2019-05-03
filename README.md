@@ -25,7 +25,7 @@ or
 
 ## Usage
 
-After installing the package, go to the main directory of your project and run `autoslap`. This should be enough for 99% of the cases. If your project was just initialized and has no dependencies, you might want to run it with flag `--yarn` to make sure it's installed with yarn instead of npm. By default, autoslap checks if you have a `yarn.lock` file in your directory - if so, it will use yarn, otherwise it will use npm.
+After installing the package, go to the **main directory** of your project and run `autoslap`. This should be enough for 99% of the cases. If your project was just initialized and has no dependencies, you might want to run it with flag `--yarn` to make sure it's installed with yarn instead of npm. By default, autoslap checks if you have a `yarn.lock` file in your directory - if so, it will use yarn, otherwise it will use npm.
 
 You can also disable installing some tools by using flags `--no-<tool>`, e.g. `autoslap --no-eslint` will not install or configure anything related to ESLint. All available options can be checked out by running `autoslap --help`.
 

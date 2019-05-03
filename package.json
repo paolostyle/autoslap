@@ -20,6 +20,7 @@
     "chalk": "^2.4.2",
     "cross-spawn": "^6.0.5",
     "fs-extra": "^7.0.1",
+    "is-git-repository": "^1.1.1",
     "jsonfile": "^5.0.0",
     "lodash.has": "^4.5.2",
     "please-upgrade-node": "^3.1.1",

@@ -1,4 +1,4 @@
-const autoslap = require('.');
+const autoslap = require('./handlePackages');
 
 jest.mock('cross-spawn', () => ({
   sync: jest.fn((command, params) => ({
@@ -8,7 +8,7 @@ jest.mock('cross-spawn', () => ({
 }));
 
 describe('preparePackages', () => {
-  test('with config only', () => {
+  test('returns proper packages with config only', () => {
     const config = {
       eslint: true,
       prettier: true,
@@ -26,7 +26,7 @@ describe('preparePackages', () => {
     expect(result).not.toContain('lint-staged');
   });
 
-  test('with config and devDependencies', () => {
+  test('returns proper packages with config and devDependencies', () => {
     const config = {
       eslint: true,
       prettier: true,
@@ -50,7 +50,7 @@ describe('preparePackages', () => {
     expect(result).toContain('lint-staged');
   });
 
-  test('with config and both devDependencies and dependencies', () => {
+  test('returns proper packages with config and both devDependencies and dependencies', () => {
     const config = {
       eslint: true,
       prettier: false,
@@ -77,7 +77,7 @@ describe('preparePackages', () => {
     expect(result).not.toContain('lint-staged');
   });
 
-  test('with react-scripts installed', () => {
+  test('returns proper packages with react-scripts installed', () => {
     const config = {
       eslint: true,
       prettier: true,
@@ -103,7 +103,7 @@ describe('preparePackages', () => {
 });
 
 describe('installPackages', () => {
-  test('throw on empty packages', () => {
+  test('throws on empty packages', () => {
     expect(() => autoslap.installPackages([])).toThrow();
   });
 
@@ -120,6 +120,27 @@ describe('installPackages', () => {
     expect(autoslap.installPackages(packages, true)).toEqual({
       command: 'yarn',
       params: ['add', 'eslint', 'husky', '--dev']
+    });
+  });
+});
+
+describe('generateEslintConfig', () => {
+  test('returns proper config for empty project', () => {
+    const config = autoslap.generateEslintConfig(
+      ['prettier', 'eslint', 'eslint-config-prettier', 'eslint-plugin-prettier'],
+      {}
+    );
+
+    expect(config).toEqual({
+      extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+      env: {
+        es6: true,
+        browser: true,
+        node: true
+      },
+      parserOptions: {
+        ecmaVersion: 10
+      }
     });
   });
 });
