@@ -3,12 +3,12 @@ const jsonfile = require('jsonfile');
 const has = require('lodash.has');
 const { usesCRA, spreadConfig } = require('./utils');
 
-function initPackageJson({ yarn }) {
-  spawnSync(yarn ? 'yarn' : 'npm', ['init'], { stdio: 'inherit' });
+function initPackageJson(config) {
+  spawnSync(config.yarn ? 'yarn' : 'npm', ['init'], { stdio: 'inherit' });
 }
 
-async function getPackageJson({ package }) {
-  return jsonfile.readFile(package);
+async function getPackageJson(config) {
+  return jsonfile.readFile(config.package);
 }
 
 function preparePackages(config, pkg) {
