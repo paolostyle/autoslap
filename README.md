@@ -13,7 +13,7 @@ The main problem is that if you're creating a new project you have to configure 
 
 That's where **autoslap** comes in. All you have to do is run `autoslap` it in your project's main directory... and that's it. It also works with existing projects: ones that were just created (e.g. using `create-react-app`), ones with already existing tooling (e.g. only `eslint` and `prettier`) and ones which don't even have a package.json yet. **autoslap** installs these packages and adds a basic config to your package.json, which you can tweak anytime.
 
-If you're installing both `eslint` and `prettier`, `eslint-plugin-prettier` and `eslint-config-prettier` will also be installed.
+If you're installing both `eslint` and `prettier`, `eslint-plugin-prettier` and `eslint-config-prettier` will also be installed and configured.
 
 In the near future you'll also be able to save a profile with your own preferred config for each of these tools.
 
@@ -32,3 +32,7 @@ You can also disable installing some tools by using flags `--no-<tool>`, e.g. `a
 ## Name
 
 You might be wondering why this package is named that way. It's an acronym for "**auto**matic **s**taged **l**inting **a**nd **p**rettyfying". Expanded name doesn't really make much sense, but autoslap sounds catchy to me. You can also think about it as a slap to the ugly code in your repo, you won't be seeing it again. And the slap will be fully automated!
+
+## Copyright
+
+Paweł Dąbrowski &copy; 2019

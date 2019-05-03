@@ -10,6 +10,13 @@ const has = require('lodash.has');
 const fs = require('fs-extra');
 const jsonfile = require('jsonfile');
 const { sync: spawnSync } = require('cross-spawn');
+const chalk = require('chalk');
+
+const title = text => console.log(chalk.bold.blue(text));
+const warning = text => console.log(chalk.yellow(text));
+const error = text => console.log(chalk.red(text));
+const progress = text => console.log(chalk.green(text));
+const success = text => console.log(chalk.bold.green(text));
 
 const argv = require('yargs')
   .detectLocale(false)
@@ -42,7 +49,7 @@ const argv = require('yargs')
 
 async function getPackageJson(config) {
   if (!fs.existsSync(config.package)) {
-    console.log('package.json does not exist in the current directory. Initializing creator...');
+    warning('package.json does not exist in the current directory. Initializing creator...');
     spawnSync(config.yarn ? 'yarn' : 'npm', ['init'], { stdio: 'inherit' });
   }
   return jsonfile.readFile(config.package);
@@ -180,6 +187,8 @@ function generateNewPackageJson(packagesToInstall, pkg) {
 }
 
 async function main() {
+  title(`${pkgFile.name} v${pkgFile.version}\n`);
+
   const config = {
     eslint: true,
     prettier: true,
@@ -190,32 +199,34 @@ async function main() {
     ...argv
   };
 
-  console.log('Reading package.json...');
+  progress('Reading package.json...');
   let pkg = await getPackageJson(config);
 
-  console.log('Preparing packages to install...');
+  progress('Preparing packages to install...');
   const packagesToInstall = preparePackages(config, pkg);
 
   if (!packagesToInstall.length) {
-    console.log('Nothing to install. Exiting.');
+    error('Nothing to install. Exiting.');
     return 1;
   }
 
-  console.log(
-    `Installing packages: ${packagesToInstall.join(', ')} using ${config.yarn ? 'yarn' : 'npm'}...`
+  progress(
+    `Installing packages: ${chalk.yellow(packagesToInstall.join(', '))} using ${
+      config.yarn ? chalk.cyan('yarn') : chalk.red('npm')
+    }...`
   );
   installPackages(packagesToInstall, config.yarn);
 
   pkg = await getPackageJson(config);
   if (!pkg) {
-    console.log("ERROR: For some reason package.json doesn't exist. Exiting...");
-    process.exit(1);
+    error('For some reason package.json does not exist. Exiting.');
+    return 1;
   }
 
-  console.log('Adding configurations...');
+  progress('Adding configurations...');
   const newPkg = generateNewPackageJson(packagesToInstall, pkg);
   await jsonfile.writeFile(config.package, newPkg, { spaces: 2 });
-  console.log('All done!');
+  success('\nDone! You can adjust your configs by modifying your package.json.');
 
   return 0;
 }

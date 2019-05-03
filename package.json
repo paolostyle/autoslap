@@ -17,6 +17,7 @@
     "test:dev": "jest --watchAll"
   },
   "dependencies": {
+    "chalk": "^2.4.2",
     "cross-spawn": "^6.0.5",
     "fs-extra": "^7.0.1",
     "jsonfile": "^5.0.0",
