@@ -5,6 +5,7 @@ Install and configure ESLint, Prettier, lint-staged and Husky with one command
 [![Build Status](https://api.travis-ci.org/paolostyle/autoslap.svg?branch=master)](https://travis-ci.org/paolostyle/autoslap)
 [![NPM](https://img.shields.io/npm/v/autoslap.svg)](https://www.npmjs.com/package/autoslap)
 [![Codecov](https://codecov.io/gh/paolostyle/autoslap/branch/master/graph/badge.svg)](https://codecov.io/gh/paolostyle/autoslap)
+[![Dependencies](https://david-dm.org/paolostyle/autoslap.svg)](https://david-dm.org/paolostyle/autoslap)
 
 ## About
 
