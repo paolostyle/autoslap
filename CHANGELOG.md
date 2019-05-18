@@ -1,5 +1,9 @@
 ### Changelog
 
+#### [v0.2.1](https://github.com/paolostyle/autoslap/compare/v0.2.0...v0.2.1) (2019-05-18)
+
+- Dropped jsonfile dependency, updated dependencies
+
 #### [v0.2.0](https://github.com/paolostyle/autoslap/compare/v0.1.4...v0.2.0) (2019-05-03)
 
 - No breaking changes, just more polished version from quality standpoint
