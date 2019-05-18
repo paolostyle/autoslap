@@ -8,7 +8,6 @@ const chalk = require('chalk');
 const { sync: spawnSync } = require('cross-spawn');
 const fs = require('fs-extra');
 const isGit = require('is-git-repository');
-const jsonfile = require('jsonfile');
 const {
   initPackageJson,
   preparePackages,
@@ -66,7 +65,7 @@ const argv = require('yargs')
     initPackageJson(config);
   }
 
-  let pkg = await jsonfile.readFile(config.package);
+  let pkg = await fs.readJson(config.package);
 
   progress('Preparing packages to install...');
   const packagesToInstall = preparePackages(config, pkg);
@@ -88,14 +87,14 @@ const argv = require('yargs')
   );
   installPackages(packagesToInstall, config.yarn);
 
-  pkg = await jsonfile.readFile(config.package);
+  pkg = await fs.readJson(config.package);
   if (!pkg) {
     error('package.json could not be opened. Exiting.');
     process.exit(1);
   }
 
   progress('Adding configurations...');
-  await jsonfile.writeFile(config.package, generateNewPackageJson(packagesToInstall, pkg), {
+  await fs.writeJson(config.package, generateNewPackageJson(packagesToInstall, pkg), {
     spaces: 2
   });
 
