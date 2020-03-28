@@ -7,6 +7,10 @@ Install and configure ESLint, Prettier, lint-staged and Husky with one command
 [![Codecov](https://codecov.io/gh/paolostyle/autoslap/branch/master/graph/badge.svg)](https://codecov.io/gh/paolostyle/autoslap)
 [![Dependencies](https://david-dm.org/paolostyle/autoslap.svg)](https://david-dm.org/paolostyle/autoslap)
 
+## Note
+
+You might want to use [mrm](https://github.com/sapegin/mrm) instead. It's more powerful and if I had time I'd probably go in this direction with autoslap.
+
 ## About
 
 I'm sure that majority of JavaScript developers use [ESLint](https://eslint.org), probably a good amount of developers use [Prettier](https://prettier.io) and some of them use [Husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged) (if you're one of those who don't - you should, but bear with me before you start running these `npm install`s). Combination of these 4 tools gives a very solid foundation for any JavaScript project - you don't have to worry about inconsistent code style or possibly buggy code in your repo anymore, because Prettier and ESLint will be run before every commit.

@@ -1,9 +1,9 @@
-const has = require('lodash.has');
+const { has } = require('lodash');
 
-const isInstalledFactory = pkg => name =>
+const isInstalledFactory = (pkg) => (name) =>
   has(pkg, `dependencies.${name}`) || has(pkg, `devDependencies.${name}`);
 
-const usesCRA = pkg => isInstalledFactory(pkg)('react-scripts');
+const usesCRA = (pkg) => isInstalledFactory(pkg)('react-scripts');
 
 module.exports = {
   spreadConfig: (condition, key, value) => (condition ? { [key]: value } : {}),

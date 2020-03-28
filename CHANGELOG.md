@@ -1,5 +1,10 @@
 ### Changelog
 
+#### [v0.4.0](https://github.com/paolostyle/autoslap/compare/v0.2.1...v0.3.0) (2020-03-28)
+
+- BREAKING: dropped support for Node 8, only >= 10 are now supported
+- Updated all dependencies
+
 #### [v0.3.0](https://github.com/paolostyle/autoslap/compare/v0.2.1...v0.3.0) (2020-03-28)
 
 - Added Stylelint support through a flag `--stylelint`, including configs for Prettier

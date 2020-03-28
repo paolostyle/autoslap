@@ -22,7 +22,7 @@
     "autoslap": "./src/index.js"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "scripts": {
     "start": "node src/index.js",
@@ -30,23 +30,23 @@
     "test:dev": "jest --watchAll"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
-    "cross-spawn": "^6.0.5",
-    "fs-extra": "^8.0.1",
+    "chalk": "^3.0.0",
+    "cross-spawn": "^7.0.1",
+    "fs-extra": "^9.0.0",
     "is-git-repository": "^1.1.1",
-    "lodash.has": "^4.5.2",
-    "please-upgrade-node": "^3.1.1",
-    "update-notifier": "^3.0.0",
-    "yargs": "^13.2.4"
+    "lodash": "^4.17.15",
+    "please-upgrade-node": "^3.2.0",
+    "update-notifier": "^4.1.0",
+    "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^4.3.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "husky": "^2.3.0",
-    "jest": "^24.8.0",
-    "lint-staged": "^8.1.7",
-    "prettier": "^1.17.1"
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.3",
+    "jest": "^25.2.3",
+    "lint-staged": "^10.0.9",
+    "prettier": "^2.0.2"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
@@ -75,17 +75,12 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.{json,md,yml}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.js": "eslint --fix",
+    "*.{json,md,yml}": "prettier --write"
   },
   "prettier": {
     "singleQuote": true,
+    "trailingComma": "none",
     "printWidth": 100
   }
 }

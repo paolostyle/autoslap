@@ -14,7 +14,7 @@ function preparePackages(config, pkg) {
 
   const isInstalled = isInstalledFactory(pkg);
   const basicPackages = ['eslint', 'prettier', 'lint-staged', 'husky', 'stylelint'];
-  let packagesToInstall = basicPackages.filter(item => config[item] && !isInstalled(item));
+  let packagesToInstall = basicPackages.filter((item) => config[item] && !isInstalled(item));
 
   if (packagesToInstall.includes('stylelint')) {
     packagesToInstall.push('stylelint-config-recommended');
@@ -31,7 +31,7 @@ function preparePackages(config, pkg) {
 
   // CRA automatically installs eslint and most of the time doesn't work with manually installed one
   if (pkg && usesCRA(pkg)) {
-    packagesToInstall = packagesToInstall.filter(item => item !== 'eslint');
+    packagesToInstall = packagesToInstall.filter((item) => item !== 'eslint');
   }
 
   return packagesToInstall;
@@ -52,7 +52,7 @@ function installPackages(packagesToInstall, withYarn) {
 }
 
 function generateEslintConfig(packagesToInstall, pkg) {
-  const appendPrettierConfig = existingExtends =>
+  const appendPrettierConfig = (existingExtends) =>
     []
       .concat(existingExtends)
       .concat(
@@ -89,7 +89,7 @@ function generateEslintConfig(packagesToInstall, pkg) {
 function generateNewPackageJson(packagesToInstall, pkg) {
   const isInstalled = (arr, all) => {
     if (!Array.isArray(arr)) arr = [arr];
-    return arr[all ? 'every' : 'some'](i => packagesToInstall.includes(i));
+    return arr[all ? 'every' : 'some']((i) => packagesToInstall.includes(i));
   };
 
   const eslintExts = 'ts,tsx,js,jsx';
