@@ -24,6 +24,10 @@ const argv = require('yargs')
       description: 'Forces installation of packages using yarn.',
       boolean: true
     },
+    stylelint: {
+      description: 'Installs and configures Stylelint.',
+      boolean: true
+    },
     'no-eslint': {
       description: 'Disables installation and configuration of ESLint.',
       boolean: true
@@ -53,6 +57,7 @@ const argv = require('yargs')
     prettier: true,
     'lint-staged': true,
     husky: true,
+    stylelint: false,
     yarn: fs.existsSync('./yarn.lock'),
     package: './package.json',
     ...argv

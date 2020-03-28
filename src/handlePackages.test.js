@@ -24,6 +24,14 @@ describe('initPackageJson properly initiates package.json creation', () => {
 });
 
 describe('preparePackages returns proper packages', () => {
+  test('unless there is no package.json', () => {
+    const config = {
+      eslint: true
+    };
+
+    expect(() => autoslap.preparePackages(config)).toThrow();
+  });
+
   test('with config only', () => {
     const config = {
       eslint: true,
@@ -32,7 +40,7 @@ describe('preparePackages returns proper packages', () => {
       husky: true
     };
 
-    const result = autoslap.preparePackages(config);
+    const result = autoslap.preparePackages(config, {});
 
     expect(result).toContain('eslint');
     expect(result).toContain('prettier');
@@ -93,6 +101,33 @@ describe('preparePackages returns proper packages', () => {
     expect(result).not.toContain('lint-staged');
   });
 
+  test('with stylelint only', () => {
+    const config = {
+      stylelint: true
+    };
+
+    const result = autoslap.preparePackages(config, {});
+
+    expect(result).toEqual(['stylelint', 'stylelint-config-recommended']);
+  });
+
+  test('with stylelint and prettier', () => {
+    const config = {
+      stylelint: true,
+      prettier: true
+    };
+
+    const result = autoslap.preparePackages(config, {});
+
+    expect(result).toEqual([
+      'prettier',
+      'stylelint',
+      'stylelint-config-recommended',
+      'stylelint-config-prettier',
+      'stylelint-prettier'
+    ]);
+  });
+
   test('with react-scripts installed', () => {
     const config = {
       eslint: true,
@@ -115,6 +150,29 @@ describe('preparePackages returns proper packages', () => {
     expect(result).toContain('eslint-plugin-prettier');
     expect(result).toContain('husky');
     expect(result).toContain('lint-staged');
+  });
+
+  test('with prettier already installed adds configs for eslint/stylelint', () => {
+    const config = {
+      eslint: true,
+      stylelint: true
+    };
+
+    const packageJson = {
+      devDependencies: {
+        prettier: '*'
+      }
+    };
+
+    const result = autoslap.preparePackages(config, packageJson);
+
+    expect(result).toContain('eslint');
+    expect(result).toContain('stylelint');
+    expect(result).toContain('stylelint-config-recommended');
+    expect(result).toContain('stylelint-config-prettier');
+    expect(result).toContain('stylelint-prettier');
+    expect(result).toContain('eslint-plugin-prettier');
+    expect(result).toContain('eslint-config-prettier');
   });
 });
 
