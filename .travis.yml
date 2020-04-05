@@ -4,8 +4,9 @@ node_js:
   - '10'
   - '8'
 install:
-  - yarn global add jest codecov
+  - yarn global add codecov
 script:
+  - yarn install
   - yarn test
   - codecov
 cache:
