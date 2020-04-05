@@ -1,6 +1,6 @@
 {
   "name": "autoslap",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Install and configure ESLint, Prettier, lint-staged and Husky with one command",
   "repository": {
     "type": "git",
